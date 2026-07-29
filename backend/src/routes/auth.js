@@ -2,10 +2,9 @@ import { Router } from 'express'
 import bcrypt from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
 import { generateToken } from '../middleware/auth.js'
+import { users } from '../data/store.js'
 
 const router = Router()
-
-const users = []
 
 router.post('/register', async (req, res) => {
   try {
@@ -24,11 +23,14 @@ router.post('/register', async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
+    const role = users.length === 0 ? 'admin' : 'user'
     const user = {
       id: uuidv4(),
       email,
       phone: phone || '',
       password: hashedPassword,
+      role,
+      status: 'active',
       createdAt: new Date().toISOString(),
     }
     users.push(user)
@@ -36,7 +38,7 @@ router.post('/register', async (req, res) => {
     const token = generateToken(user)
     res.status(201).json({
       token,
-      user: { id: user.id, email: user.email, phone: user.phone, createdAt: user.createdAt },
+      user: { id: user.id, email: user.email, phone: user.phone, role: user.role, createdAt: user.createdAt },
     })
   } catch {
     res.status(500).json({ error: '注册失败，请稍后重试' })
@@ -64,7 +66,7 @@ router.post('/login', async (req, res) => {
     const token = generateToken(user)
     res.json({
       token,
-      user: { id: user.id, email: user.email, phone: user.phone, createdAt: user.createdAt },
+      user: { id: user.id, email: user.email, phone: user.phone, role: user.role, createdAt: user.createdAt },
     })
   } catch {
     res.status(500).json({ error: '登录失败，请稍后重试' })

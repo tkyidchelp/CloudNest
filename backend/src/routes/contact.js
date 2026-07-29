@@ -1,8 +1,7 @@
 import { Router } from 'express'
+import { contactSubmissions } from '../data/store.js'
 
 const router = Router()
-
-const submissions = []
 
 router.post('/submit', (req, res) => {
   try {
@@ -13,17 +12,18 @@ router.post('/submit', (req, res) => {
     }
 
     const submission = {
-      id: submissions.length + 1,
+      id: contactSubmissions.length + 1,
       name,
       email,
       company: company || '',
       phone: phone || '',
       type,
       message,
+      status: 'pending',
       createdAt: new Date().toISOString(),
     }
 
-    submissions.push(submission)
+    contactSubmissions.push(submission)
     console.log('New contact submission:', JSON.stringify(submission, null, 2))
 
     res.status(201).json({ message: '提交成功，我们将在 1 个工作日内与您联系', id: submission.id })

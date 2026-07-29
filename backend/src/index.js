@@ -4,6 +4,7 @@ import authRoutes from './routes/auth.js'
 import productRoutes from './routes/products.js'
 import contactRoutes from './routes/contact.js'
 import userRoutes from './routes/user.js'
+import adminRoutes from './routes/admin.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -23,6 +24,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/contact', contactRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.use((_req, res) => {
   res.status(404).json({ error: 'Not found' })

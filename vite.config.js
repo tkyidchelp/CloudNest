@@ -14,6 +14,7 @@ export default defineConfig({
         contact: resolve(__dirname, 'src/pages/contact.html'),
         login: resolve(__dirname, 'src/pages/login.html'),
         dashboard: resolve(__dirname, 'src/pages/dashboard.html'),
+        admin: resolve(__dirname, 'src/pages/admin.html'),
         docs: resolve(__dirname, 'src/pages/docs.html'),
       }
     }

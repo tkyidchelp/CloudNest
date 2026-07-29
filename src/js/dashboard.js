@@ -7,6 +7,7 @@ export function renderDashboardNavbar() {
     return
   }
   const user = getCurrentUser()
+  const isAdmin = user?.role === 'admin'
 
   return `
   <nav class="navbar navbar-expand-lg fixed-top">
@@ -23,6 +24,7 @@ export function renderDashboardNavbar() {
           <li class="nav-item"><a class="nav-link" href="/pages/products.html">产品</a></li>
           <li class="nav-item"><a class="nav-link" href="/pages/pricing.html">价格</a></li>
           <li class="nav-item"><a class="nav-link" href="/pages/docs.html">文档</a></li>
+          ${isAdmin ? '<li class="nav-item"><a class="nav-link text-warning" href="/pages/admin.html"><i class="bi bi-shield-lock me-1"></i>管理后台</a></li>' : ''}
         </ul>
         <div class="d-flex align-items-center gap-2">
           <button id="themeToggle" class="btn btn-sm btn-outline-secondary rounded-pill px-2" title="切换主题">

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 - CloudNest</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    .admin-layout { display: flex; min-height: 100vh; }
+    .admin-sidebar {
+      width: 260px;
+      background: rgba(15, 23, 42, 0.95);
+      border-right: 1px solid rgba(99, 102, 241, 0.1);
+      padding: 1.5rem 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    .admin-main {
+      margin-left: 260px;
+      flex: 1;
+      padding: 2rem;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      color: #fff;
+      background: rgba(99, 102, 241, 0.1);
+      border-left-color: #6366f1;
+    }
+    .sidebar-link i { font-size: 1.2rem; width: 24px; text-align: center; }
+    .stat-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    .stat-card:hover { border-color: rgba(99, 102, 241, 0.4); }
+    .table-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+    .admin-table { margin-bottom: 0; }
+    .admin-table th {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      border-bottom-color: rgba(99, 102, 241, 0.1);
+    }
+    .admin-table td {
+      vertical-align: middle;
+      border-bottom-color: rgba(99, 102, 241, 0.05);
+    }
+    .badge-admin { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+    .badge-status { font-size: 0.75rem; }
+    .tab-content-section { display: none; }
+    .tab-content-section.active { display: block; }
+    @media (max-width: 768px) {
+      .admin-sidebar { width: 100%; height: auto; position: relative; }
+      .admin-main { margin-left: 0; }
+      .admin-layout { flex-direction: column; }
+    }
+  </style>
+</head>
+<body style="background: #0f172a;">
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="px-3 mb-4">
+        <a href="/" class="text-decoration-none"><span class="gradient-text fs-3 fw-bold">CloudNest</span></a>
+        <small class="text-body-secondary d-block mt-1">管理后台</small>
+      </div>
+      <nav>
+        <a href="#" class="sidebar-link active" data-tab="dashboard">
+          <i class="bi bi-speedometer2"></i> 控制台
+        </a>
+        <a href="#" class="sidebar-link" data-tab="users">
+          <i class="bi bi-people"></i> 用户管理
+        </a>
+        <a href="#" class="sidebar-link" data-tab="contacts">
+          <i class="bi bi-chat-dots"></i> 联系管理
+        </a>
+        <a href="#" class="sidebar-link" data-tab="products-admin">
+          <i class="bi bi-box"></i> 产品管理
+        </a>
+      </nav>
+      <div class="mt-auto px-3" style="position: absolute; bottom: 1.5rem; left: 0; right: 0;">
+        <hr class="border-secondary border-opacity-25">
+        <div class="d-flex justify-content-between align-items-center px-2">
+          <small class="text-body-secondary" id="adminEmail"></small>
+          <button id="adminLogout" class="btn btn-sm btn-outline-danger rounded-pill px-3">退出</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div id="alertContainer"></div>
+
+      <!-- Dashboard -->
+      <div class="tab-content-section active" id="tab-dashboard">
+        <h3 class="fw-bold mb-4">控制台概览</h3>
+        <div class="row g-4 mb-4">
+          <div class="col-6 col-xl-3">
+            <div class="stat-card"><small class="text-body-secondary">总用户数</small><div class="stat-number gradient-text" id="statTotalUsers">0</div></div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card"><small class="text-body-secondary">活跃用户</small><div class="stat-number text-success" id="statActiveUsers">0</div></div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card"><small class="text-body-secondary">待处理留言</small><div class="stat-number text-warning" id="statPendingContacts">0</div></div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card"><small class="text-body-secondary">管理员数</small><div class="stat-number text-info" id="statAdminUsers">0</div></div>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="table-card p-3">
+              <h6 class="fw-bold mb-3">最近注册用户</h6>
+              <div id="recentUsers"><small class="text-body-secondary">加载中...</small></div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="table-card p-3">
+              <h6 class="fw-bold mb-3">最近留言</h6>
+              <div id="recentContacts"><small class="text-body-secondary">加载中...</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users -->
+      <div class="tab-content-section" id="tab-users">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-bold mb-0">用户管理</h3>
+          <span class="text-body-secondary small" id="userCount">共 0 个用户</span>
+        </div>
+        <div class="table-card">
+          <table class="table admin-table">
+            <thead><tr><th>邮箱</th><th>手机</th><th>角色</th><th>状态</th><th>注册时间</th><th class="text-end">操作</th></tr></thead>
+            <tbody id="userTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Contacts -->
+      <div class="tab-content-section" id="tab-contacts">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-bold mb-0">联系管理</h3>
+          <div><span class="badge bg-warning rounded-pill me-2" id="pendingBadge">0 待处理</span></div>
+        </div>
+        <div class="table-card">
+          <table class="table admin-table">
+            <thead><tr><th>姓名</th><th>邮箱</th><th>类型</th><th>状态</th><th>时间</th><th class="text-end">操作</th></tr></thead>
+            <tbody id="contactTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Products Admin -->
+      <div class="tab-content-section" id="tab-products-admin">
+        <h3 class="fw-bold mb-4">产品管理</h3>
+        <div class="row g-4" id="productAdminList"></div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    const token = localStorage.getItem('token')
+    if (!token) window.location.href = '/pages/login.html'
+
+    const headers = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+
+    async function apiGet(url) {
+      const res = await fetch(url, { headers })
+      if (res.status === 401) { localStorage.clear(); window.location.href = '/pages/login.html'; return null }
+      if (res.status === 403) { showAlert('无权访问管理后台', 'danger'); return null }
+      const data = await res.json()
+      if (!res.ok) { showAlert(data.error || '请求失败', 'danger'); return null }
+      return data
+    }
+
+    async function apiPatch(url, body) {
+      const res = await fetch(url, { method: 'PATCH', headers, body: JSON.stringify(body) })
+      if (res.status === 403) { showAlert('无权执行此操作', 'danger'); return false }
+      const data = await res.json()
+      if (!res.ok) { showAlert(data.error || '操作失败', 'danger'); return false }
+      showAlert(data.message || '操作成功', 'success')
+      return true
+    }
+
+    function showAlert(msg, type) {
+      const el = document.getElementById('alertContainer')
+      el.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show py-2 small">${msg}<button class="btn-close" data-bs-dismiss="alert"></button></div>`
+      setTimeout(() => { el.innerHTML = '' }, 3000)
+    }
+
+    // Load user info
+    fetch('/api/user/profile', { headers }).then(r => r.json()).then(d => {
+      document.getElementById('adminEmail').textContent = d.user?.email || ''
+    }).catch(() => {})
+
+    // Tab switching
+    document.querySelectorAll('.sidebar-link[data-tab]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault()
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'))
+        link.classList.add('active')
+        document.querySelectorAll('.tab-content-section').forEach(s => s.classList.remove('active'))
+        const tabId = 'tab-' + link.dataset.tab
+        document.getElementById(tabId).classList.add('active')
+        if (link.dataset.tab === 'dashboard') loadDashboard()
+        else if (link.dataset.tab === 'users') loadUsers()
+        else if (link.dataset.tab === 'contacts') loadContacts()
+        else if (link.dataset.tab === 'products-admin') loadProductsAdmin()
+      })
+    })
+
+    // Dashboard
+    async function loadDashboard() {
+      const data = await apiGet('/api/admin/stats')
+      if (!data) return
+      document.getElementById('statTotalUsers').textContent = data.users.total
+      document.getElementById('statActiveUsers').textContent = data.users.active
+      document.getElementById('statPendingContacts').textContent = data.contacts.pending
+      document.getElementById('statAdminUsers').textContent = data.users.admin
+
+      const usersData = await apiGet('/api/admin/users')
+      if (usersData) {
+        const recent = usersData.users.slice(-5).reverse()
+        document.getElementById('recentUsers').innerHTML = recent.map(u =>
+          `<div class="d-flex justify-content-between align-items-center py-2 border-bottom border-secondary border-opacity-10">
+            <small>${u.email}</small>
+            <span class="badge ${u.role === 'admin' ? 'badge-admin' : 'bg-secondary bg-opacity-25'} rounded-pill badge-status">${u.role === 'admin' ? '管理员' : '用户'}</span>
+          </div>`
+        ).join('') || '<small class="text-body-secondary">暂无数据</small>'
+      }
+
+      const contactsData = await apiGet('/api/admin/contacts')
+      if (contactsData) {
+        const recent = contactsData.contacts.slice(-5).reverse()
+        document.getElementById('recentContacts').innerHTML = recent.map(c =>
+          `<div class="d-flex justify-content-between align-items-center py-2 border-bottom border-secondary border-opacity-10">
+            <small>${c.name} - ${c.type}</small>
+            <span class="badge ${c.status === 'pending' ? 'bg-warning' : c.status === 'processed' ? 'bg-success' : 'bg-secondary'} rounded-pill badge-status">${c.status === 'pending' ? '待处理' : c.status === 'processed' ? '已处理' : '已关闭'}</span>
+          </div>`
+        ).join('') || '<small class="text-body-secondary">暂无数据</small>'
+      }
+    }
+
+    // Users
+    async function loadUsers() {
+      const data = await apiGet('/api/admin/users')
+      if (!data) return
+      document.getElementById('userCount').textContent = `共 ${data.users.length} 个用户`
+      document.getElementById('userTableBody').innerHTML = data.users.map(u => `
+        <tr>
+          <td><small>${u.email}</small></td>
+          <td><small class="text-body-secondary">${u.phone || '-'}</small></td>
+          <td><span class="badge ${u.role === 'admin' ? 'badge-admin' : 'bg-secondary bg-opacity-25'} rounded-pill badge-status">${u.role === 'admin' ? '管理员' : '用户'}</span></td>
+          <td><span class="badge ${u.status === 'active' ? 'bg-success' : 'bg-danger'} bg-opacity-25 rounded-pill badge-status">${u.status === 'active' ? '正常' : '禁用'}</span></td>
+          <td><small class="text-body-secondary">${new Date(u.createdAt).toLocaleDateString('zh-CN')}</small></td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-glow rounded-pill me-1 toggle-role" data-id="${u.id}" data-role="${u.role}">
+              ${u.role === 'admin' ? '降为用户' : '升为管理'}
+            </button>
+            <button class="btn btn-sm btn-outline-danger rounded-pill toggle-status" data-id="${u.id}" data-status="${u.status}">
+              ${u.status === 'active' ? '禁用' : '启用'}
+            </button>
+          </td>
+        </tr>
+      `).join('')
+
+      document.querySelectorAll('.toggle-role').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const newRole = btn.dataset.role === 'admin' ? 'user' : 'admin'
+          if (await apiPatch(`/api/admin/users/${btn.dataset.id}/role`, { role: newRole })) loadUsers()
+        })
+      })
+      document.querySelectorAll('.toggle-status').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const newStatus = btn.dataset.status === 'active' ? 'disabled' : 'active'
+          if (await apiPatch(`/api/admin/users/${btn.dataset.id}/status`, { status: newStatus })) loadUsers()
+        })
+      })
+    }
+
+    // Contacts
+    async function loadContacts() {
+      const data = await apiGet('/api/admin/contacts')
+      if (!data) return
+      const pendingCount = data.contacts.filter(c => c.status === 'pending').length
+      document.getElementById('pendingBadge').textContent = `${pendingCount} 待处理`
+      document.getElementById('contactTableBody').innerHTML = data.contacts.reverse().map(c => `
+        <tr>
+          <td><small>${c.name}</small></td>
+          <td><small class="text-body-secondary">${c.email}</small></td>
+          <td><small>${c.type}</small></td>
+          <td><span class="badge ${c.status === 'pending' ? 'bg-warning' : c.status === 'processed' ? 'bg-success' : 'bg-secondary'} rounded-pill badge-status">${c.status === 'pending' ? '待处理' : c.status === 'processed' ? '已处理' : '已关闭'}</span></td>
+          <td><small class="text-body-secondary">${new Date(c.createdAt).toLocaleString('zh-CN')}</small></td>
+          <td class="text-end">
+            ${c.status === 'pending' ? `<button class="btn btn-sm btn-success rounded-pill me-1 process-contact" data-id="${c.id}">标记已处理</button>` : ''}
+            <button class="btn btn-sm btn-outline-glow rounded-pill view-contact" data-id="${c.id}">详情</button>
+          </td>
+        </tr>
+      `).join('')
+
+      document.querySelectorAll('.process-contact').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (await apiPatch(`/api/admin/contacts/${btn.dataset.id}/status`, { status: 'processed' })) loadContacts()
+        })
+      })
+      document.querySelectorAll('.view-contact').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const data = await apiGet('/api/admin/contacts')
+          const c = data?.contacts.find(x => x.id === parseInt(btn.dataset.id))
+          if (c) {
+            showAlert(`<strong>${c.name}</strong> (${c.email})<br>公司: ${c.company || '-'}<br>电话: ${c.phone || '-'}<br>内容: ${c.message}`, 'info')
+          }
+        })
+      })
+    }
+
+    // Products Admin
+    async function loadProductsAdmin() {
+      const data = await apiGet('/api/products/list')
+      if (!data) return
+      document.getElementById('productAdminList').innerHTML = data.products.map(p => `
+        <div class="col-lg-6">
+          <div class="stat-card h-100">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h6 class="fw-bold mb-0"><i class="bi bi-${p.icon} text-primary me-2"></i>${p.name}</h6>
+              <span class="badge bg-primary bg-opacity-25 rounded-pill">${p.id.toUpperCase()}</span>
+            </div>
+            <p class="text-body-secondary small mb-3">${p.description}</p>
+            <div class="row g-2 small mb-3">
+              ${p.features.map(f => `<div class="col-6"><i class="bi bi-dot text-primary"></i> ${f}</div>`).join('')}
+            </div>
+            <div class="d-flex gap-2">
+              <span class="badge bg-secondary bg-opacity-25 rounded-pill">入门 ¥${p.price.entry}/月</span>
+              <span class="badge bg-success bg-opacity-25 rounded-pill">专业 ¥${p.price.pro}/月</span>
+              <span class="badge bg-info bg-opacity-25 rounded-pill">企业 ¥${p.price.enterprise}/月</span>
+            </div>
+          </div>
+        </div>
+      `).join('')
+    }
+
+    // Logout
+    document.getElementById('adminLogout').addEventListener('click', () => {
+      localStorage.clear()
+      window.location.href = '/pages/login.html'
+    })
+
+    // Load dashboard by default
+    loadDashboard()
+  </script>
+</body>
+</html>

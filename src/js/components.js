@@ -1,4 +1,9 @@
 export function renderNavbar(activePage = 'home') {
+  const token = localStorage.getItem('token')
+  let user = null
+  try { user = JSON.parse(localStorage.getItem('user')) } catch {}
+  const isAdmin = user?.role === 'admin'
+
   const pages = [
     { id: 'home', name: '首页', href: '/' },
     { id: 'products', name: '产品', href: '/pages/products.html' },
@@ -29,8 +34,13 @@ export function renderNavbar(activePage = 'home') {
           <button id="themeToggle" class="btn btn-sm btn-outline-secondary rounded-pill px-2" title="切换主题">
             <i class="bi bi-sun-fill"></i>
           </button>
-          <a href="/pages/login.html" class="btn btn-sm btn-outline-glow rounded-pill px-3">登录</a>
-          <a href="/pages/login.html?tab=register" class="btn btn-sm btn-primary-glow rounded-pill px-3">免费试用</a>
+          ${token ? `
+            ${isAdmin ? '<a href="/pages/admin.html" class="btn btn-sm btn-outline-warning rounded-pill px-3">管理后台</a>' : ''}
+            <a href="/pages/dashboard.html" class="btn btn-sm btn-outline-glow rounded-pill px-3">控制台</a>
+          ` : `
+            <a href="/pages/login.html" class="btn btn-sm btn-outline-glow rounded-pill px-3">登录</a>
+            <a href="/pages/login.html?tab=register" class="btn btn-sm btn-primary-glow rounded-pill px-3">免费试用</a>
+          `}
         </div>
       </div>
     </div>

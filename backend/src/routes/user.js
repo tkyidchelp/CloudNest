@@ -1,13 +1,16 @@
 import { Router } from 'express'
 import { authMiddleware } from '../middleware/auth.js'
+import { users } from '../data/store.js'
 
 const router = Router()
 
 router.get('/profile', authMiddleware, (req, res) => {
+  const user = users.find(u => u.id === req.user.id)
   res.json({
     user: {
       id: req.user.id,
       email: req.user.email,
+      role: user?.role || 'user',
     },
   })
 })
