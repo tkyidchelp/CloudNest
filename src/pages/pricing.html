@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>价格套餐 - CloudNest</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <section class="py-5" style="padding-top: 120px !important;">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h1 class="fw-bold mb-3">透明 <span class="gradient-text">定价</span></h1>
+        <p class="text-body-secondary" style="max-width:600px;margin:0 auto;">灵活计费，按需选择。所有价格公开透明，无隐藏费用。</p>
+      </div>
+
+      <div class="gradient-border p-4 mb-5" id="calculator">
+        <h4 class="fw-bold mb-4 text-center">价格计算器</h4>
+        <div class="row g-3 align-items-end">
+          <div class="col-6 col-md">
+            <label class="form-label small text-body-secondary">CPU 核心</label>
+            <select class="form-select" id="cpuCores">
+              <option value="1">1 核</option>
+              <option value="2" selected>2 核</option>
+              <option value="4">4 核</option>
+              <option value="8">8 核</option>
+              <option value="16">16 核</option>
+              <option value="32">32 核</option>
+            </select>
+          </div>
+          <div class="col-6 col-md">
+            <label class="form-label small text-body-secondary">内存 (GB)</label>
+            <select class="form-select" id="ramSize">
+              <option value="2">2 GB</option>
+              <option value="4" selected>4 GB</option>
+              <option value="8">8 GB</option>
+              <option value="16">16 GB</option>
+              <option value="32">32 GB</option>
+              <option value="64">64 GB</option>
+            </select>
+          </div>
+          <div class="col-6 col-md">
+            <label class="form-label small text-body-secondary">系统盘 (GB)</label>
+            <select class="form-select" id="diskSize">
+              <option value="30">30 GB</option>
+              <option value="50" selected>50 GB</option>
+              <option value="100">100 GB</option>
+              <option value="200">200 GB</option>
+              <option value="500">500 GB</option>
+            </select>
+          </div>
+          <div class="col-6 col-md">
+            <label class="form-label small text-body-secondary">带宽 (Mbps)</label>
+            <select class="form-select" id="bandwidth">
+              <option value="3">3 Mbps</option>
+              <option value="5" selected>5 Mbps</option>
+              <option value="10">10 Mbps</option>
+              <option value="30">30 Mbps</option>
+              <option value="100">100 Mbps</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-auto">
+            <button id="calculateBtn" class="btn btn-primary-glow rounded-pill w-100">计算价格</button>
+          </div>
+        </div>
+        <div id="priceResult" class="text-center mt-4 pt-3 border-top border-secondary border-opacity-25" style="display:none;">
+          <div class="row">
+            <div class="col-6"><small class="text-body-secondary">月付预估</small><br><span class="fs-3 fw-bold gradient-text">¥<span id="monthlyPrice">0</span></span><span class="text-body-secondary">/月</span></div>
+            <div class="col-6"><small class="text-body-secondary">年付预估 (7折)</small><br><span class="fs-3 fw-bold gradient-text">¥<span id="yearlyPrice">0</span></span><span class="text-body-secondary">/年</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="pricing-card h-100">
+            <h5 class="fw-bold mb-1">入门型</h5>
+            <p class="text-body-secondary small mb-3">个人开发者 / 小型站点</p>
+            <div class="mb-3"><span class="fs-1 fw-bold">49</span> <span class="text-body-secondary">元/月</span></div>
+            <ul class="list-unstyled mb-4">
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>2 vCPU / 2GB 内存</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>50GB SSD 云盘</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>5Mbps 带宽</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>1 个独立 IPv4</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>基础 DDoS 防护</li>
+            </ul>
+            <a href="/pages/login.html?tab=register" class="btn btn-outline-glow w-100 rounded-pill">开始使用</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="pricing-card popular h-100">
+            <div class="popular-badge">最受欢迎</div>
+            <h5 class="fw-bold mb-1">专业型</h5>
+            <p class="text-body-secondary small mb-3">中小企业 / 电商平台</p>
+            <div class="mb-3"><span class="fs-1 fw-bold">199</span> <span class="text-body-secondary">元/月</span></div>
+            <ul class="list-unstyled mb-4">
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>4 vCPU / 8GB 内存</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>100GB SSD 云盘</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>10Mbps 带宽</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>1 个独立 IPv4</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>高级 DDoS + WAF</li>
+            </ul>
+            <a href="/pages/login.html?tab=register" class="btn btn-primary-glow w-100 rounded-pill">立即选购</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="pricing-card h-100">
+            <h5 class="fw-bold mb-1">企业型</h5>
+            <p class="text-body-secondary small mb-3">大型企业 / 高并发业务</p>
+            <div class="mb-3"><span class="fs-1 fw-bold">699</span> <span class="text-body-secondary">元/月</span></div>
+            <ul class="list-unstyled mb-4">
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>8 vCPU / 16GB 内存</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>200GB SSD 云盘</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>30Mbps 带宽</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>2 个独立 IPv4</li>
+              <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i>企业安全 + CDN</li>
+            </ul>
+            <a href="/pages/login.html?tab=register" class="btn btn-outline-glow w-100 rounded-pill">开始使用</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5 pt-3">
+        <h5 class="fw-bold mb-3">需要定制方案？</h5>
+        <p class="text-body-secondary mb-3">大型企业、特殊需求请联系销售团队获取专属报价</p>
+        <a href="/pages/contact.html" class="btn btn-outline-glow rounded-pill">联系销售</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script type="module">
+    import { injectLayout } from '/js/components.js'
+    injectLayout('pricing')
+    import '/js/main.js'
+  </script>
+</body>
+</html>

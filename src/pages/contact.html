@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>联系我们 - CloudNest</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <section class="py-5" style="padding-top: 120px !important;">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h1 class="fw-bold mb-3"><span class="gradient-text">联系我们</span></h1>
+        <p class="text-body-secondary" style="max-width:600px;margin:0 auto;">我们的技术支持团队 7x24 小时待命，随时为您提供帮助</p>
+      </div>
+
+      <div class="row g-4 mb-5">
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-card h-100 text-center">
+            <div class="feature-icon mx-auto"><i class="bi bi-headset"></i></div>
+            <h6 class="fw-bold mb-2">技术支持</h6>
+            <p class="text-body-secondary small mb-1">7x24 小时在线</p>
+            <a href="#" class="small text-decoration-none">support@cloudnest.com</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-card h-100 text-center">
+            <div class="feature-icon mx-auto"><i class="bi bi-telephone-fill"></i></div>
+            <h6 class="fw-bold mb-2">销售咨询</h6>
+            <p class="text-body-secondary small mb-1">工作日 9:00-18:00</p>
+            <span class="small">400-888-9999</span>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-card h-100 text-center">
+            <div class="feature-icon mx-auto"><i class="bi bi-building"></i></div>
+            <h6 class="fw-bold mb-2">公司地址</h6>
+            <p class="text-body-secondary small mb-0">北京市海淀区<br>中关村科技园区</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-card h-100 text-center">
+            <div class="feature-icon mx-auto"><i class="bi bi-chat-dots-fill"></i></div>
+            <h6 class="fw-bold mb-2">在线客服</h6>
+            <p class="text-body-secondary small mb-1">即时在线沟通</p>
+            <a href="#" class="small text-decoration-none">开始对话</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5">
+        <div class="col-lg-7">
+          <div class="feature-card">
+            <h4 class="fw-bold mb-4">发送消息</h4>
+            <form id="contactForm">
+              <div id="contactAlert"></div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label small">姓名 <span class="text-danger">*</span></label>
+                  <input type="text" name="name" class="form-control" required placeholder="您的姓名">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small">邮箱 <span class="text-danger">*</span></label>
+                  <input type="email" name="email" class="form-control" required placeholder="your@email.com">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small">公司名称</label>
+                  <input type="text" name="company" class="form-control" placeholder="公司名称（选填）">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small">联系电话</label>
+                  <input type="tel" name="phone" class="form-control" placeholder="手机号码（选填）">
+                </div>
+                <div class="col-12">
+                  <label class="form-label small">咨询类型 <span class="text-danger">*</span></label>
+                  <select name="type" class="form-select" required>
+                    <option value="">请选择</option>
+                    <option>产品咨询</option>
+                    <option>技术支持</option>
+                    <option>商务合作</option>
+                    <option>投诉建议</option>
+                    <option>其他</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small">留言内容 <span class="text-danger">*</span></label>
+                  <textarea name="message" class="form-control" rows="5" required placeholder="请描述您的需求..."></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary-glow rounded-pill px-4">
+                    <span class="spinner-border spinner-border-sm d-none me-1" id="contactSpinner"></span>
+                    提交留言
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="feature-card h-100">
+            <h4 class="fw-bold mb-4">常见问题</h4>
+            <div class="mb-3">
+              <h6 class="fw-semibold"><i class="bi bi-question-circle text-primary me-2"></i>如何申请免费试用？</h6>
+              <p class="text-body-secondary small mb-0">注册账号后自动获得 7 天试用额度，无需绑定信用卡。</p>
+            </div>
+            <div class="mb-3">
+              <h6 class="fw-semibold"><i class="bi bi-question-circle text-primary me-2"></i>支持哪些支付方式？</h6>
+              <p class="text-body-secondary small mb-0">支持支付宝、微信支付、银行转账、对公汇款。</p>
+            </div>
+            <div class="mb-3">
+              <h6 class="fw-semibold"><i class="bi bi-question-circle text-primary me-2"></i>可以开具发票吗？</h6>
+              <p class="text-body-secondary small mb-0">支持增值税普通发票和专用发票，电子发票即时开具。</p>
+            </div>
+            <div class="mb-3">
+              <h6 class="fw-semibold"><i class="bi bi-question-circle text-primary me-2"></i>SLA 保障如何赔付？</h6>
+              <p class="text-body-secondary small mb-0">如未达到约定的 SLA 标准，按故障时长比例自动赔付。</p>
+            </div>
+            <div>
+              <h6 class="fw-semibold"><i class="bi bi-question-circle text-primary me-2"></i>支持数据迁移吗？</h6>
+              <p class="text-body-secondary small mb-0">提供免费的数据迁移工具和技术支持，助您平滑迁移。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="contactToast" class="toast" role="alert">
+      <div class="toast-header">
+        <i class="bi bi-check-circle-fill text-success me-2"></i>
+        <strong class="me-auto">提交成功</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+      </div>
+      <div class="toast-body">感谢您的留言，我们将在 1 个工作日内与您联系。</div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script type="module">
+    import { injectLayout } from '/js/components.js'
+    import '/js/main.js'
+    import { Toast } from 'bootstrap'
+
+    injectLayout('contact')
+
+    const form = document.getElementById('contactForm')
+    const alertContainer = document.getElementById('contactAlert')
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const btn = form.querySelector('button[type="submit"]')
+      const spinner = document.getElementById('contactSpinner')
+      btn.disabled = true
+      spinner.classList.remove('d-none')
+
+      try {
+        const res = await fetch('/api/contact/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: form.name.value,
+            email: form.email.value,
+            company: form.company.value,
+            phone: form.phone.value,
+            type: form.type.value,
+            message: form.message.value,
+          }),
+        })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error)
+
+        const toast = new Toast(document.getElementById('contactToast'))
+        toast.show()
+        form.reset()
+      } catch (err) {
+        alertContainer.innerHTML = `<div class="alert alert-danger py-2 small">${err.message}</div>`
+      } finally {
+        btn.disabled = false
+        spinner.classList.add('d-none')
+      }
+    })
+  </script>
+</body>
+</html>

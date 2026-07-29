@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>控制台 - CloudNest</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <section class="py-5" style="padding-top: 120px !important;">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold mb-0">控制台</h1>
+        <span class="badge bg-success rounded-pill px-3 py-2"><i class="bi bi-circle-fill me-1" style="font-size:0.5rem;"></i>在线</span>
+      </div>
+
+      <div class="row g-4 mb-4">
+        <div class="col-6 col-lg-3">
+          <div class="feature-card text-center">
+            <div class="stat-number gradient-text" id="runningCount">0</div>
+            <small class="text-body-secondary">运行中实例</small>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="feature-card text-center">
+            <div class="stat-number gradient-text" id="totalCount">0</div>
+            <small class="text-body-secondary">资源总数</small>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="feature-card text-center">
+            <div class="stat-number text-body-secondary" id="ticketCount">0</div>
+            <small class="text-body-secondary">待处理工单</small>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="feature-card text-center">
+            <div class="stat-number text-body-secondary"><span class="fs-6">¥</span><span id="balance">0.00</span></div>
+            <small class="text-body-secondary">账户余额</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="feature-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h5 class="fw-bold mb-0">快捷操作</h5>
+            </div>
+            <div class="row g-3">
+              <div class="col-6 col-md-3">
+                <a href="/pages/pricing.html" class="text-decoration-none">
+                  <div class="text-center p-3 rounded-3 border border-secondary border-opacity-25 h-100" style="background: rgba(99,102,241,0.05);">
+                    <i class="bi bi-plus-circle fs-3 gradient-text d-block mb-2"></i>
+                    <small>创建实例</small>
+                  </div>
+                </a>
+              </div>
+              <div class="col-6 col-md-3">
+                <a href="/pages/docs.html" class="text-decoration-none">
+                  <div class="text-center p-3 rounded-3 border border-secondary border-opacity-25 h-100" style="background: rgba(99,102,241,0.05);">
+                    <i class="bi bi-book fs-3 gradient-text d-block mb-2"></i>
+                    <small>查看文档</small>
+                  </div>
+                </a>
+              </div>
+              <div class="col-6 col-md-3">
+                <a href="/pages/contact.html" class="text-decoration-none">
+                  <div class="text-center p-3 rounded-3 border border-secondary border-opacity-25 h-100" style="background: rgba(99,102,241,0.05);">
+                    <i class="bi bi-ticket-perforated fs-3 gradient-text d-block mb-2"></i>
+                    <small>提交工单</small>
+                  </div>
+                </a>
+              </div>
+              <div class="col-6 col-md-3">
+                <a href="/pages/pricing.html" class="text-decoration-none">
+                  <div class="text-center p-3 rounded-3 border border-secondary border-opacity-25 h-100" style="background: rgba(99,102,241,0.05);">
+                    <i class="bi bi-wallet2 fs-3 gradient-text d-block mb-2"></i>
+                    <small>充值</small>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="feature-card h-100">
+            <h5 class="fw-bold mb-3">系统公告</h5>
+            <div class="mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+              <small class="text-info fw-semibold d-block">2026-07-28</small>
+              <small class="text-body-secondary">北京节点网络升级维护通知（8月1日 02:00-04:00）</small>
+            </div>
+            <div class="mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+              <small class="text-success fw-semibold d-block">2026-07-25</small>
+              <small class="text-body-secondary">CloudNest 上海数据中心正式上线运营</small>
+            </div>
+            <div>
+              <small class="text-warning fw-semibold d-block">2026-07-20</small>
+              <small class="text-body-secondary">CDN 加速服务新增东南亚节点</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script type="module">
+    import { renderDashboardLayout } from '/js/dashboard.js'
+    import '/js/main.js'
+
+    renderDashboardLayout('overview')
+
+    fetch('/api/user/stats', {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    })
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('runningCount').textContent = data.resources?.running || 0
+        document.getElementById('totalCount').textContent = data.resources?.total || 0
+        document.getElementById('ticketCount').textContent = data.tickets?.open || 0
+        document.getElementById('balance').textContent = (data.billing?.balance || 0).toFixed(2)
+      })
+      .catch(() => {})
+  </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>产品展示 - CloudNest</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <section class="py-5" style="padding-top: 120px !important;">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h1 class="fw-bold mb-3">产品与<span class="gradient-text">解决方案</span></h1>
+        <p class="text-body-secondary" style="max-width:600px;margin:0 auto;">覆盖云计算、物理托管、安全防护、CDN 加速的完整产品矩阵</p>
+      </div>
+
+      <div class="row g-4 mb-5">
+        <div class="col-lg-6">
+          <div class="feature-card h-100">
+            <div class="feature-icon"><i class="bi bi-cloud-arrow-up-fill"></i></div>
+            <h4 class="fw-bold mb-3">云服务器 ECS</h4>
+            <p class="text-body-secondary mb-3">弹性计算服务，支持按需创建、秒级部署。覆盖通用型、计算型、内存型、GPU 型等多种实例规格。</p>
+            <div class="row g-2 small">
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> Intel Xeon Gold / AMD EPYC</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 1~96 vCPU 灵活配置</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> SSD / NVMe 高性能存储</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> VPC 私有网络隔离</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 支持自定义镜像</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 弹性 IP + 共享带宽</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="feature-card h-100">
+            <div class="feature-icon"><i class="bi bi-server"></i></div>
+            <h4 class="fw-bold mb-3">物理机托管 BMS</h4>
+            <p class="text-body-secondary mb-3">独享物理服务器，T3+ 标准机房环境。适用于高性能计算、大数据处理、AI 训练等场景。</p>
+            <div class="row g-2 small">
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> Dell / HPE / 浪潮 品牌机</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 双路 Xeon / EPYC</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 支持 GPU (A100/H100)</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 双路市电 + UPS + 柴发</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 精密空调恒温恒湿</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 7x24 机房运维值守</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="feature-card h-100">
+            <div class="feature-icon"><i class="bi bi-shield-shaded"></i></div>
+            <h4 class="fw-bold mb-3">安全防护 Shield</h4>
+            <p class="text-body-secondary mb-3">多层次安全防御体系，覆盖网络层、传输层、应用层。Tbps 级 DDoS 清洗能力，智能 WAF 规则引擎。</p>
+            <div class="row g-2 small">
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> Tbps 级 DDoS 清洗</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> Web 应用防火墙 WAF</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> CC 攻击智能防护</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> SSL/TLS 证书管理</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 入侵检测 IDS/IPS</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 日志审计与告警</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="feature-card h-100">
+            <div class="feature-icon"><i class="bi bi-globe2"></i></div>
+            <h4 class="fw-bold mb-3">CDN 加速</h4>
+            <p class="text-body-secondary mb-3">全球 3000+ 边缘节点，智能调度最优路径。支持动静分离、全站加速、直播加速等场景。</p>
+            <div class="row g-2 small">
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 全球 3000+ 节点</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 智能 DNS 调度</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 动静分离加速</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 全站 HTTPS 支持</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 图片/视频 智能处理</div>
+              <div class="col-6"><i class="bi bi-dot text-primary"></i> 实时日志与监控</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script type="module">
+    import { injectLayout } from '/js/components.js'
+    injectLayout('products')
+    import '/js/main.js'
+  </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户中心 - CloudNest</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-lg-4">
+        <div class="text-center mb-4">
+          <a href="/" class="text-decoration-none"><span class="gradient-text fs-3 fw-bold">CloudNest</span></a>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <ul class="nav nav-pills mb-4 justify-content-center" id="authTabs" role="tablist">
+          <li class="nav-item">
+            <button class="nav-link active rounded-pill px-4" data-bs-toggle="tab" data-bs-target="#loginTab">登录</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link rounded-pill px-4" data-bs-toggle="tab" data-bs-target="#registerTab">注册</button>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="loginTab">
+            <div class="feature-card">
+              <form id="loginForm">
+                <div class="mb-3">
+                  <label class="form-label small">邮箱</label>
+                  <input type="email" name="email" class="form-control" placeholder="请输入邮箱" required>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label small">密码</label>
+                    <a href="#" class="small text-decoration-none">忘记密码？</a>
+                  </div>
+                  <input type="password" name="password" class="form-control" placeholder="请输入密码" required>
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="rememberMe">
+                  <label class="form-check-label small" for="rememberMe">记住我</label>
+                </div>
+                <button type="submit" class="btn btn-primary-glow w-100 rounded-pill mb-3">
+                  <span class="spinner-border spinner-border-sm d-none me-1" id="loginSpinner"></span>
+                  登录
+                </button>
+                <div class="text-center">
+                  <small class="text-body-secondary">还没有账号？<a href="#" class="text-decoration-none" id="goRegister">立即注册</a></small>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="registerTab">
+            <div class="feature-card">
+              <form id="registerForm">
+                <div class="mb-3">
+                  <label class="form-label small">邮箱 <span class="text-danger">*</span></label>
+                  <input type="email" name="email" class="form-control" placeholder="请输入邮箱地址" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small">手机号</label>
+                  <input type="tel" name="phone" class="form-control" placeholder="请输入手机号（选填）">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small">设置密码 <span class="text-danger">*</span></label>
+                  <input type="password" name="password" class="form-control" placeholder="至少 8 位，包含字母和数字" required minlength="8">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small">确认密码 <span class="text-danger">*</span></label>
+                  <input type="password" name="confirmPassword" class="form-control" placeholder="请再次输入密码" required minlength="8">
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                  <label class="form-check-label small" for="agreeTerms">我已阅读并同意 <a href="#" class="text-decoration-none">服务协议</a> 和 <a href="#" class="text-decoration-none">隐私政策</a></label>
+                </div>
+                <button type="submit" class="btn btn-primary-glow w-100 rounded-pill mb-3">
+                  <span class="spinner-border spinner-border-sm d-none me-1" id="registerSpinner"></span>
+                  注册并免费试用
+                </button>
+                <div class="text-center">
+                  <small class="text-body-secondary">已有账号？<a href="#" class="text-decoration-none" id="goLogin">立即登录</a></small>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import '/js/main.js'
+    import { Tab } from 'bootstrap'
+
+    function showAlert(message, type = 'danger') {
+      const container = document.getElementById('alertContainer')
+      container.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show py-2 small" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>`
+    }
+
+    function setLoading(form, spinnerId, loading) {
+      const btn = form.querySelector('button[type="submit"]')
+      const spinner = document.getElementById(spinnerId)
+      btn.disabled = loading
+      spinner.classList.toggle('d-none', !loading)
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const form = e.target
+      setLoading(form, 'loginSpinner', true)
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: form.email.value, password: form.password.value }),
+        })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error)
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        window.location.href = '/pages/dashboard.html'
+      } catch (err) {
+        showAlert(err.message)
+      } finally {
+        setLoading(form, 'loginSpinner', false)
+      }
+    })
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const form = e.target
+      if (form.password.value !== form.confirmPassword.value) {
+        showAlert('两次输入的密码不一致')
+        return
+      }
+      setLoading(form, 'registerSpinner', true)
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: form.email.value,
+            phone: form.phone.value,
+            password: form.password.value,
+          }),
+        })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error)
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        window.location.href = '/pages/dashboard.html'
+      } catch (err) {
+        showAlert(err.message)
+      } finally {
+        setLoading(form, 'registerSpinner', false)
+      }
+    })
+
+    document.getElementById('goRegister').addEventListener('click', (e) => {
+      e.preventDefault()
+      new Tab(document.querySelector('[data-bs-target="#registerTab"]')).show()
+    })
+
+    document.getElementById('goLogin').addEventListener('click', (e) => {
+      e.preventDefault()
+      new Tab(document.querySelector('[data-bs-target="#loginTab"]')).show()
+    })
+
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('tab') === 'register') {
+      new Tab(document.querySelector('[data-bs-target="#registerTab"]')).show()
+    }
+  </script>
+</body>
+</html>
