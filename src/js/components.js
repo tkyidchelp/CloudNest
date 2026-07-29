@@ -89,9 +89,10 @@ export function renderFooter() {
         <div class="col-6 col-lg-2">
           <h6 class="fw-semibold mb-3">法律</h6>
           <ul class="list-unstyled">
-            <li class="mb-2"><a href="#" class="text-body-secondary text-decoration-none">服务协议</a></li>
-            <li class="mb-2"><a href="#" class="text-body-secondary text-decoration-none">隐私政策</a></li>
-            <li class="mb-2"><a href="#" class="text-body-secondary text-decoration-none">SLA 承诺</a></li>
+            <li class="mb-2"><a href="/pages/terms.html" class="text-body-secondary text-decoration-none">服务协议</a></li>
+            <li class="mb-2"><a href="/pages/privacy.html" class="text-body-secondary text-decoration-none">隐私政策</a></li>
+            <li class="mb-2"><a href="/pages/sla.html" class="text-body-secondary text-decoration-none">SLA 承诺</a></li>
+            <li class="mb-2"><a href="/pages/aup.html" class="text-body-secondary text-decoration-none">使用政策</a></li>
           </ul>
         </div>
       </div>

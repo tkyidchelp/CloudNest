@@ -16,6 +16,10 @@ export default defineConfig({
         dashboard: resolve(__dirname, 'src/pages/dashboard.html'),
         admin: resolve(__dirname, 'src/pages/admin.html'),
         docs: resolve(__dirname, 'src/pages/docs.html'),
+        terms: resolve(__dirname, 'src/pages/terms.html'),
+        privacy: resolve(__dirname, 'src/pages/privacy.html'),
+        sla: resolve(__dirname, 'src/pages/sla.html'),
+        aup: resolve(__dirname, 'src/pages/aup.html'),
       }
     }
   },

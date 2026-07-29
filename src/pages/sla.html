@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLA 服务等级协议 - CloudNest</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <section class="py-5" style="padding-top: 120px !important;">
+    <div class="container" style="max-width: 860px;">
+      <h1 class="fw-bold mb-2">CloudNest SLA 服务等级协议</h1>
+      <p class="text-body-secondary mb-4">最后更新日期：2026 年 7 月 29 日</p>
+
+      <div class="feature-card">
+        <h5 class="fw-bold mb-3">一、定义</h5>
+        <p class="text-body-secondary small"><strong>服务周期</strong>：一个自然月。不满一个月的按实际使用天数折算。</p>
+        <p class="text-body-secondary small"><strong>服务不可用</strong>：因 CloudNest 设备、网络、系统故障导致服务完全中断，且持续时间超过 5 分钟。单个实例或单节点不可用计为不可用时间。</p>
+        <p class="text-body-secondary small"><strong>月度可用性</strong> =（服务周期总分钟数 - 不可用分钟数）/ 服务周期总分钟数 x 100%。</p>
+        <p class="text-body-secondary small"><strong>赔偿额度</strong>：以赠送服务代金券的形式发放，可用于抵扣后续服务费用，不可提现和转让。</p>
+      </div>
+
+      <div class="feature-card mt-3">
+        <h5 class="fw-bold mb-3">二、可用性承诺</h5>
+        <div class="table-responsive">
+          <table class="table table-borderless small mb-0">
+            <thead><tr class="border-bottom border-secondary border-opacity-25"><th>服务</th><th>月度可用性 (SLA)</th><th>适用产品</th></tr></thead>
+            <tbody>
+              <tr><td>云服务器 ECS</td><td><span class="text-info fw-semibold">99.95%</span></td><td>所有付费实例</td></tr>
+              <tr><td>物理机托管 BMS</td><td><span class="text-info fw-semibold">99.99%</span></td><td>所有托管服务器</td></tr>
+              <tr><td>安全防护 Shield</td><td><span class="text-info fw-semibold">99.9%</span></td><td>DDoS 清洗 / WAF</td></tr>
+              <tr><td>CDN 加速</td><td><span class="text-info fw-semibold">99.9%</span></td><td>所有加速域名</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="feature-card mt-3">
+        <h5 class="fw-bold mb-3">三、赔偿标准</h5>
+        <p class="text-body-secondary small mb-2">月度可用性低于承诺值时，按如下比例赔偿当月服务费用的代金券：</p>
+        <div class="table-responsive">
+          <table class="table table-borderless small mb-0">
+            <thead><tr class="border-bottom border-secondary border-opacity-25"><th>月度可用性</th><th>赔偿比例</th></tr></thead>
+            <tbody>
+              <tr><td>99.0% - 低于承诺值</td><td>当月费用的 <span class="text-warning fw-semibold">10%</span></td></tr>
+              <tr><td>95.0% - 99.0%</td><td>当月费用的 <span class="text-warning fw-semibold">25%</span></td></tr>
+              <tr><td>低于 95.0%</td><td>当月费用的 <span class="text-warning fw-semibold">50%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-body-secondary small mt-2">物理机托管服务的赔偿比例在上述基础上翻倍，最低赔偿为当月费用的 20%。</p>
+      </div>
+
+      <div class="feature-card mt-3">
+        <h5 class="fw-bold mb-3">四、免责条款</h5>
+        <p class="text-body-secondary small">以下情况导致的服务不可用不计入 SLA，CloudNest 不承担赔偿责任：</p>
+        <p class="text-body-secondary small">4.1 不可抗力：自然灾害（地震、洪水、台风）、战争、恐怖袭击、政府行为等不能预见、不能避免且不能克服的客观事件。</p>
+        <p class="text-body-secondary small">4.2 用户原因：操作系统和应用软件故障、配置不当、超额使用导致资源耗尽、误操作删除数据等。</p>
+        <p class="text-body-secondary small">4.3 计划维护：CloudNest 提前 24 小时通过站内信、邮件或短信通知的网络和系统维护。</p>
+        <p class="text-body-secondary small">4.4 第三方原因：上游网络运营商线路故障、域名注册商 DNS 解析故障、SSL 证书颁发机构服务中断。</p>
+        <p class="text-body-secondary small">4.5 DDoS 攻击超出您购买的防护套餐清洗能力上限导致的服务中断。</p>
+        <p class="text-body-secondary small">4.6 您违反服务协议或 AUP 导致 CloudNest 采取的服务暂停措施。</p>
+      </div>
+
+      <div class="feature-card mt-3">
+        <h5 class="fw-bold mb-3">五、赔偿申请流程</h5>
+        <p class="text-body-secondary small">5.1 您应在服务不可用发生后的 <strong>5 个工作日内</strong>通过工单系统提交赔偿申请，逾期视为放弃。</p>
+        <p class="text-body-secondary small">5.2 申请需包含：受影响的服务实例 ID、不可用的起止时间、故障现象描述、业务影响说明。</p>
+        <p class="text-body-secondary small">5.3 CloudNest 在收到申请后的 <strong>10 个工作日内</strong>完成核查。核查结果通过工单通知您。</p>
+        <p class="text-body-secondary small">5.4 赔偿确认后，代金券在 <strong>3 个工作日内</strong>发放至您的账户余额。代金券有效期为 6 个月。</p>
+        <p class="text-body-secondary small">5.5 单个月度的累计赔偿金额不超过您当月实际支付的服务费用总额。</p>
+      </div>
+
+      <div class="feature-card mt-3">
+        <h5 class="fw-bold mb-3">六、服务监控与透明度</h5>
+        <p class="text-body-secondary small">6.1 CloudNest 在官网公开实时服务状态页面，展示各服务和节点的健康状态。</p>
+        <p class="text-body-secondary small">6.2 发生重大故障时，CloudNest 通过站内公告和邮件每 30 分钟更新一次故障处理进度，直至恢复。</p>
+        <p class="text-body-secondary small">6.3 每月结束后 5 个工作日内，控制台自动生成上月服务可用性报告，包含 SLA 达成情况和故障事件记录。</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script type="module">
+    import { injectLayout } from '/js/components.js'
+    injectLayout('sla')
+    import '/js/main.js'
+  </script>
+</body>
+</html>
